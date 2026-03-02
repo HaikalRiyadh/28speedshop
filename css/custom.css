@@ -1,0 +1,239 @@
+/* ================================
+   28 Speed Shop - Custom Styles
+================================ */
+
+/* Login Page */
+.login-body {
+    background: 
+        linear-gradient(135deg, rgba(15, 15, 30, 0.85) 0%, rgba(22, 33, 62, 0.8) 50%, rgba(15, 52, 96, 0.85) 100%),
+        url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    min-height: 100vh;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.login-body .card {
+    border-radius: 1rem !important;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-body .card .card-body {
+    color: #fff;
+}
+
+.login-body .card h4,
+.login-body .card .form-label {
+    color: #fff;
+}
+
+.login-body .card p.text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.login-body .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.login-body .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.login-body .form-control:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(13, 110, 253, 0.6);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.2);
+    color: #fff;
+}
+
+/* Summary Cards */
+.card-summary {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.75rem !important;
+}
+
+.card-summary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Table Improvements */
+.table > thead > tr > th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #6c757d;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.875rem 0.75rem;
+}
+
+.table > tbody > tr > td {
+    padding: 0.875rem 0.75rem;
+    vertical-align: middle;
+}
+
+.table > tbody > tr {
+    transition: background-color 0.15s ease;
+}
+
+/* Card Improvements */
+.card {
+    border-radius: 0.75rem !important;
+}
+
+.card-header {
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Modal Improvements */
+.modal-content {
+    border-radius: 1rem !important;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 1rem 1.5rem;
+}
+
+/* Badge Improvements */
+.badge {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* Sidebar Enhancement */
+.sb-sidenav-menu-heading {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 1.5rem 1rem 0.5rem;
+}
+
+.sb-sidenav-dark .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    margin: 0.15rem 0.5rem;
+}
+
+.sb-sidenav-dark .nav-link {
+    border-radius: 0.5rem;
+    margin: 0.1rem 0.5rem;
+    transition: background 0.2s ease;
+}
+
+.sb-sidenav-dark .nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+}
+
+/* Page Title */
+h1.fw-bold {
+    font-size: 1.75rem;
+}
+
+/* Form Controls */
+.form-control,
+.form-select {
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.875rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Button Improvements */
+.btn {
+    border-radius: 0.5rem;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid #e9ecef;
+}
+
+/* Alert Improvements */
+.alert {
+    border-radius: 0.75rem;
+    border: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1.fw-bold {
+        font-size: 1.35rem;
+    }
+
+    .icon-circle {
+        width: 45px;
+        height: 45px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+}
