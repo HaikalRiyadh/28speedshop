@@ -161,9 +161,6 @@ php -S localhost:8000
 
 ---
 
-
----
-
 ## �📊 Struktur Database
 
 ### ERD (Entity Relationship Diagram)
@@ -226,28 +223,6 @@ INSERT INTO login (email, password) VALUES ('email@example.com', 'password123');
 ```
 *Catatan: Sebaiknya implementasikan password hashing untuk keamanan*
 </details>
-
----
-
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Jika ingin berkontribusi:
-
-1. Fork repository ini
-2. Buat branch baru (`git checkout -b feature/NamaFitur`)
-3. Commit perubahan (`git commit -m 'Menambahkan fitur baru'`)
-4. Push ke branch (`git push origin feature/NamaFitur`)
-5. Buat Pull Request
-
----
-
----
-
-
-
----
-
-
 
 ---
 
