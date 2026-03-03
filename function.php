@@ -66,7 +66,9 @@ if (isset($_POST['addbarangmasuk'])) {
     $keterangan = $_POST['keterangan'] ?? '';
 
     if ($idbarang == '' || $qty <= 0) {
-        die("Data tidak valid");
+        $_SESSION['msg_error'] = "Data tidak valid. Pastikan barang dan jumlah sudah benar.";
+        header('Location: masuk.php');
+        exit;
     }
 
     // simpan transaksi masuk
@@ -79,6 +81,7 @@ if (isset($_POST['addbarangmasuk'])) {
     $stmt2->bind_param("ii", $qty, $idbarang);
     $stmt2->execute();
 
+    $_SESSION['msg_success'] = "Data barang masuk berhasil ditambahkan.";
     header('Location: masuk.php');
     exit;
 }
@@ -94,18 +97,24 @@ if (isset($_POST['addbarangkeluar'])) {
     $keterangan = $_POST['keterangan'] ?? '';
 
     if ($idbarang == '' || $qty <= 0) {
-        die("Data tidak valid");
+        $_SESSION['msg_error'] = "Data tidak valid. Pastikan barang dan jumlah sudah benar.";
+        header('Location: keluar.php');
+        exit;
     }
 
     // cek stok cukup atau tidak
-    $cek = $conn->prepare("SELECT stock FROM stock WHERE idbarang = ?");
+    $cek = $conn->prepare("SELECT stock, namabarang FROM stock WHERE idbarang = ?");
     $cek->bind_param("i", $idbarang);
     $cek->execute();
     $result = $cek->get_result();
     $row = $result->fetch_assoc();
 
     if (!$row || $row['stock'] < $qty) {
-        die("Stok tidak mencukupi");
+        $namaBarang = $row ? $row['namabarang'] : 'Barang';
+        $stokTersedia = $row ? $row['stock'] : 0;
+        $_SESSION['msg_error'] = "Stok '$namaBarang' tidak mencukupi! Sisa stok: $stokTersedia, jumlah diminta: $qty.";
+        header('Location: keluar.php');
+        exit;
     }
 
     // simpan transaksi keluar
@@ -118,6 +127,7 @@ if (isset($_POST['addbarangkeluar'])) {
     $stmt2->bind_param("ii", $qty, $idbarang);
     $stmt2->execute();
 
+    $_SESSION['msg_success'] = "Data barang keluar berhasil ditambahkan.";
     header('Location: keluar.php');
     exit;
 }

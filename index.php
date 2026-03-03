@@ -12,6 +12,7 @@ require 'cek.php';
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -68,17 +69,35 @@ require 'cek.php';
                     </div>
 
                     <?php if (isset($_SESSION['msg_error'])): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i><?php echo $_SESSION['msg_error']; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top',
+                                    icon: 'error',
+                                    title: '<?php echo addslashes($_SESSION['msg_error']); ?>',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                });
+                            });
+                        </script>
                         <?php unset($_SESSION['msg_error']); ?>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['msg_success'])): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['msg_success']; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top',
+                                    icon: 'success',
+                                    title: '<?php echo addslashes($_SESSION['msg_success']); ?>',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                });
+                            });
+                        </script>
                         <?php unset($_SESSION['msg_success']); ?>
                     <?php endif; ?>
 
@@ -172,7 +191,9 @@ require 'cek.php';
                                                     data-bs-toggle="modal" data-bs-target="#editModal">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                                <form method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus barang ini? Semua data transaksi terkait juga akan terhapus.')">
+                                                <form method="post" class="d-inline form-delete"
+                                                    data-nama="<?php echo htmlspecialchars($row['namabarang'], ENT_QUOTES); ?>"
+                                                    data-msg="Yakin ingin menghapus barang '<?php echo htmlspecialchars($row['namabarang'], ENT_QUOTES); ?>'? Semua data transaksi terkait juga akan terhapus.">
                                                     <input type="hidden" name="idbarang" value="<?php echo $row['idbarang']; ?>">
                                                     <button type="submit" name="deletebarang" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i> Hapus
@@ -261,13 +282,43 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <script>
-        document.querySelectorAll('.btn-edit-barang').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.getElementById('edit_idbarang').value   = this.dataset.id;
-                document.getElementById('edit_namabarang').value = this.dataset.nama;
-                document.getElementById('edit_deskripsi').value  = this.dataset.deskripsi;
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.btn-edit-barang');
+            if (btn) {
+                document.getElementById('edit_idbarang').value   = btn.dataset.id;
+                document.getElementById('edit_namabarang').value = btn.dataset.nama;
+                document.getElementById('edit_deskripsi').value  = btn.dataset.deskripsi;
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.form-delete button[type="submit"]');
+            if (!btn) return;
+            e.preventDefault();
+            var form = btn.closest('.form-delete');
+            var btnName = btn.getAttribute('name');
+            Swal.fire({
+                title: 'Hapus ' + form.dataset.nama + '?',
+                text: form.dataset.msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash me-1"></i> Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    var hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = btnName;
+                    hidden.value = '1';
+                    form.appendChild(hidden);
+                    form.submit();
+                }
             });
         });
     </script>

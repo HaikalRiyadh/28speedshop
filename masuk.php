@@ -12,6 +12,7 @@ require 'cek.php';
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -70,24 +71,59 @@ require 'cek.php';
 
                     <!-- Alert Messages -->
                     <?php if (isset($_SESSION['msg_error'])): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i><?php echo $_SESSION['msg_error']; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top',
+                                    icon: 'error',
+                                    title: '<?php echo addslashes($_SESSION['msg_error']); ?>',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                });
+                            });
+                        </script>
                         <?php unset($_SESSION['msg_error']); ?>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['msg_success'])): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['msg_success']; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top',
+                                    icon: 'success',
+                                    title: '<?php echo addslashes($_SESSION['msg_success']); ?>',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                });
+                            });
+                        </script>
                         <?php unset($_SESSION['msg_success']); ?>
                     <?php endif; ?>
 
                     <!-- Summary -->
                     <?php
-                    $totalMasuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM masuk"))['total'];
-                    $totalQtyMasuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(qty),0) as total FROM masuk"))['total'];
+                    // Filter tanggal
+                    $filterTglMulai  = $_GET['tgl_mulai'] ?? '';
+                    $filterTglAkhir  = $_GET['tgl_akhir'] ?? '';
+
+                    $whereClause = '';
+                    $whereSummary = '';
+                    if ($filterTglMulai && $filterTglAkhir) {
+                        $whereClause = " AND DATE(m.tanggal) BETWEEN '" . $conn->real_escape_string($filterTglMulai) . "' AND '" . $conn->real_escape_string($filterTglAkhir) . "'";
+                        $whereSummary = " WHERE DATE(tanggal) BETWEEN '" . $conn->real_escape_string($filterTglMulai) . "' AND '" . $conn->real_escape_string($filterTglAkhir) . "'";
+                    } elseif ($filterTglMulai) {
+                        $whereClause = " AND DATE(m.tanggal) >= '" . $conn->real_escape_string($filterTglMulai) . "'";
+                        $whereSummary = " WHERE DATE(tanggal) >= '" . $conn->real_escape_string($filterTglMulai) . "'";
+                    } elseif ($filterTglAkhir) {
+                        $whereClause = " AND DATE(m.tanggal) <= '" . $conn->real_escape_string($filterTglAkhir) . "'";
+                        $whereSummary = " WHERE DATE(tanggal) <= '" . $conn->real_escape_string($filterTglAkhir) . "'";
+                    }
+
+                    $totalMasuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM masuk" . $whereSummary))['total'];
+                    $totalQtyMasuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(qty),0) as total FROM masuk" . $whereSummary))['total'];
                     ?>
                     <div class="row mb-4">
                         <div class="col-xl-6 col-md-6 mb-3">
@@ -120,11 +156,27 @@ require 'cek.php';
 
                     <!-- Table -->
                     <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
+                        <div class="card-header bg-white d-flex align-items-center justify-content-between py-3 flex-wrap gap-2">
                             <h5 class="mb-0 fw-semibold"><i class="fas fa-table me-2 text-muted"></i>Riwayat Barang Masuk</h5>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
-                                <i class="fas fa-plus me-1"></i> Tambah Barang Masuk
-                            </button>
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <form method="get" class="d-flex align-items-center gap-2 flex-wrap">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <label class="form-label mb-0 small fw-semibold text-muted">Dari</label>
+                                        <input type="date" name="tgl_mulai" class="form-control form-control-sm" value="<?php echo htmlspecialchars($filterTglMulai); ?>" style="width:150px">
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <label class="form-label mb-0 small fw-semibold text-muted">Sampai</label>
+                                        <input type="date" name="tgl_akhir" class="form-control form-control-sm" value="<?php echo htmlspecialchars($filterTglAkhir); ?>" style="width:150px">
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-filter me-1"></i>Filter</button>
+                                    <?php if ($filterTglMulai || $filterTglAkhir): ?>
+                                        <a href="masuk.php" class="btn btn-sm btn-outline-secondary"><i class="fas fa-times me-1"></i>Reset</a>
+                                    <?php endif; ?>
+                                </form>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    <i class="fas fa-plus me-1"></i> Tambah Barang Masuk
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -142,7 +194,7 @@ require 'cek.php';
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        $data = mysqli_query($conn, "SELECT m.*, s.namabarang FROM masuk m JOIN stock s ON m.idbarang = s.idbarang ORDER BY m.tanggal DESC");
+                                        $data = mysqli_query($conn, "SELECT m.*, s.namabarang FROM masuk m JOIN stock s ON m.idbarang = s.idbarang WHERE 1=1" . $whereClause . " ORDER BY m.tanggal DESC");
                                         while ($row = mysqli_fetch_assoc($data)) {
                                         ?>
                                         <tr>
@@ -163,7 +215,9 @@ require 'cek.php';
                                                     data-bs-toggle="modal" data-bs-target="#editMasukModal">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                                <form method="post" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini? Stok akan disesuaikan kembali.')">
+                                                <form method="post" class="d-inline form-delete"
+                                                    data-nama="<?php echo htmlspecialchars($row['namabarang'], ENT_QUOTES); ?>"
+                                                    data-msg="Yakin ingin menghapus data masuk '<?php echo htmlspecialchars($row['namabarang'], ENT_QUOTES); ?>'? Stok akan disesuaikan kembali.">
                                                     <input type="hidden" name="idmasuk"  value="<?php echo $row['idmasuk']; ?>">
                                                     <input type="hidden" name="idbarang" value="<?php echo $row['idbarang']; ?>">
                                                     <input type="hidden" name="qty"      value="<?php echo $row['qty']; ?>">
@@ -264,15 +318,45 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <script>
-        document.querySelectorAll('.btn-edit-masuk').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.getElementById('edit_idmasuk').value          = this.dataset.id;
-                document.getElementById('edit_masuk_idbarang').value   = this.dataset.idbarang;
-                document.getElementById('edit_masuk_qty_lama').value   = this.dataset.qty;
-                document.getElementById('edit_masuk_qty').value        = this.dataset.qty;
-                document.getElementById('edit_masuk_keterangan').value = this.dataset.keterangan;
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.btn-edit-masuk');
+            if (btn) {
+                document.getElementById('edit_idmasuk').value          = btn.dataset.id;
+                document.getElementById('edit_masuk_idbarang').value   = btn.dataset.idbarang;
+                document.getElementById('edit_masuk_qty_lama').value   = btn.dataset.qty;
+                document.getElementById('edit_masuk_qty').value        = btn.dataset.qty;
+                document.getElementById('edit_masuk_keterangan').value = btn.dataset.keterangan;
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.form-delete button[type="submit"]');
+            if (!btn) return;
+            e.preventDefault();
+            var form = btn.closest('.form-delete');
+            var btnName = btn.getAttribute('name');
+            Swal.fire({
+                title: 'Hapus ' + form.dataset.nama + '?',
+                text: form.dataset.msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash me-1"></i> Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    var hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = btnName;
+                    hidden.value = '1';
+                    form.appendChild(hidden);
+                    form.submit();
+                }
             });
         });
     </script>
