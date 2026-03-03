@@ -14,8 +14,6 @@
 
 **Sistem Manajemen Inventori Modern untuk Toko Aksesoris Motor**
 
-[Demo](#-demo) • [Fitur](#-fitur-utama) • [Instalasi](#-instalasi) • [Cara Penggunaan](#-cara-penggunaan) • [Kontribusi](#-kontribusi)
-
 </div>
 
 ---
