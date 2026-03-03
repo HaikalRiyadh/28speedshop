@@ -39,10 +39,6 @@
 
 ---
 
-
-
----
-
 ## 🛠️ Teknologi yang Digunakan
 
 ### Tech Stack
