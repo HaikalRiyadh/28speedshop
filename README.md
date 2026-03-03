@@ -39,30 +39,7 @@
 
 ---
 
-## 🎯 Demo
 
-### 📸 Preview Aplikasi
-
-<div align="center">
-
-| Login Page | Dashboard |
-|:----------:|:---------:|
-| ![Login](https://via.placeholder.com/400x300?text=Login+Page) | ![Dashboard](https://via.placeholder.com/400x300?text=Dashboard) |
-
-| Stock Barang | Barang Masuk/Keluar |
-|:------------:|:-------------------:|
-| ![Stock](https://via.placeholder.com/400x300?text=Stock+Management) | ![Transaction](https://via.placeholder.com/400x300?text=Transactions) |
-
-</div>
-
-> 💡 **Tip:** Ganti placeholder di atas dengan screenshot aplikasi Anda untuk tampilan yang lebih menarik!
-
-**Fitur Unggulan:**
-- Dashboard dengan statistik real-time
-- DataTables untuk pencarian dan sorting data
-- Form input dengan validasi
-- Alert notification menggunakan SweetAlert2
-- Chart visualisasi data
 
 ---
 
@@ -156,34 +133,6 @@ $conn = mysqli_connect("localhost", "root", "", "28speedshop");
 php -S localhost:8000
 ```
 
-5️⃣ **Login ke Sistem**
-
-Gunakan kredensial default:
-```
-Email    : admin@28speedshop.com
-Password : admin123
-```
-
-> ⚠️ **PENTING:** Segera ubah password default setelah login pertama kali!
-
----
-
-## ⚡ Performance & Security Tips
-
-### 🔒 Security Best Practices
-1. ✅ Ganti password default setelah instalasi
-2. ✅ Implementasikan password hashing (bcrypt/password_hash)
-3. ✅ Gunakan prepared statements untuk query
-4. ✅ Validasi semua input dari user
-5. ✅ Aktifkan HTTPS di production
-6. ✅ Backup database secara berkala
-
-### ⚡ Performance Tips
-- Enable opcache untuk PHP
-- Gunakan index pada foreign key database
-- Compress assets (CSS/JS) untuk production
-- Implementasikan caching untuk query yang sering diakses
-- Optimize images sebelum upload
 
 ---
 
@@ -211,28 +160,7 @@ Password : admin123
 ```
 
 ---
-## � Cara Penggunaan
 
-### 1. Stock Barang
-- Klik **Stock Barang** di sidebar
-- Klik tombol **Tambah Barang** untuk menambah barang baru
-- Isi form: Nama Barang, Deskripsi, dan Stok Awal
-- Klik **Simpan** untuk menyimpan data
-
-### 2. Barang Masuk
-- Masuk ke menu **Barang Masuk**
-- Klik **Tambah Barang Masuk**
-- Pilih barang yang ingin ditambah stoknya
-- Masukkan jumlah (qty) dan keterangan
-- Stok akan otomatis bertambah setelah disimpan
-
-### 3. Barang Keluar
-- Masuk ke menu **Barang Keluar**  
-- Klik **Tambah Barang Keluar**
-- Pilih barang yang ingin dikurangi stoknya
-- Masukkan jumlah (qty) dan keterangan
-- System akan validasi ketersediaan stok
-- Stok akan otomatis berkurang setelah disimpan
 
 ---
 
@@ -313,33 +241,13 @@ Kontribusi sangat diterima! Jika ingin berkontribusi:
 
 ---
 
-## 📝 Roadmap & To-Do
+---
 
-- [ ] Implementasi password hashing (bcrypt)
-- [ ] Export data ke PDF/Excel
-- [ ] Role management (Admin/Staff)
-- [ ] Fitur notifikasi stok minimum
-- [ ] Laporan bulanan otomatis
-- [ ] Barcode scanner integration
-- [ ] Dark mode theme
+
 
 ---
 
-## � Changelog
 
-### Version 1.0.0 (Current)
-- ✅ Sistem manajemen stok barang
-- ✅ Fitur barang masuk & keluar
-- ✅ Dashboard interaktif
-- ✅ Sistem autentikasi
-- ✅ DataTables integration
-- ✅ Responsive design
-
----
-
-## �📄 Lisensi
-
-Distributed under the MIT License. Bebas digunakan untuk pembelajaran dan komersial.
 
 ---
 
@@ -347,7 +255,7 @@ Distributed under the MIT License. Bebas digunakan untuk pembelajaran dan komers
 
 Jika ada pertanyaan atau butuh bantuan:
 
-- 📧 Email: haikalriyadh@example.com
+- 📧 Email: haikalriyadhr@gmail.com
 - 💬 Issues: [GitHub Issues](https://github.com/HaikalRiyadh/28speedshop/issues)
 - 🌟 Star project ini jika bermanfaat!
 
