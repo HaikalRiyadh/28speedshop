@@ -116,27 +116,7 @@ $conn = mysqli_connect("localhost", "root", "", "28speedshop");
 # Jika menggunakan PHP Built-in Server
 php -S localhost:8000
 ```
-
-5️⃣ **Login ke Sistem**
-
-Gunakan kredensial default:
-```
-Email    : admin@28speedshop.com
-Password : admin123
-```
-
-> ⚠️ **PENTING:** Segera ubah password default setelah login pertama kali!
-
 ---
-
-## 📊 Struktur Database
-
-```sql
-28speedshop/
-├── stock       → Tabel master barang
-├── masuk       → Log barang masuk
-├── keluar      → Log barang keluar
-└── login       → Data user & autentikasi
 ```
 
 ### ERD (Entity Relationship Diagram)
@@ -164,97 +144,11 @@ Password : admin123
 ```
 
 ---
-
-## 📖 Dokumentasi
-
-### Fitur Detail
-
-#### 1. Stock Barang
-- Tambah barang baru
-- Edit informasi barang
-- Hapus barang
-- Lihat detail stok tersedia
-
-#### 2. Barang Masuk
-- Catat barang masuk dengan qty
-- Otomatis update stok
-- Histori barang masuk
-- Filter berdasarkan tanggal
-
-#### 3. Barang Keluar
-- Catat barang keluar/terjual
-- Validasi stok tersedia
-- Otomatis kurangi stok
-- Laporan barang keluar
-
----
-
-## 🔒 Keamanan
-
-- ✔️ Session-based authentication
-- ✔️ SQL Injection prevention
-- ✔️ Password protection
-- ✔️ Input validation & sanitization
-- ⚠️ Recommended: Implementasi password hashing (bcrypt/password_hash)
-
----
-
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Untuk berkontribusi:
-
-1. Fork repository ini
-2. Buat branch baru (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
----
-
-## 📝 To-Do List
-
-- [ ] Implementasi password hashing
-- [ ] Export data ke PDF/Excel
-- [ ] Multi-user role management
-- [ ] Fitur backup otomatis
-- [ ] Email notification
-- [ ] Barcode scanner integration
-- [ ] Mobile app version
-- [ ] Dashboard analytics advanced
-
----
-
-## 🐛 Bug Report
-
-Menemukan bug? Silakan laporkan melalui [Issues](https://github.com/HaikalRiyadh/28speedshop/issues) dengan detail:
-- Deskripsi bug
-- Langkah reproduksi
-- Screenshot (jika ada)
-- Environment (PHP version, OS, Browser)
-
----
-
-## 📄 Lisensi
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 👨‍💻 Author
-
-**28SpeedShop Development Team**
-
-💌 Email: admin@28speedshop.com  
-🌐 Website: [28speedshop.com](https://28speedshop.com)  
-📱 Support: [Contact Us](mailto:admin@28speedshop.com)
-
----
-
 <div align="center">
 
 ### ⭐ Jika project ini membantu, jangan lupa berikan star!
 
-**Made with ❤️ for the motorcycle community**
+**Made with HaikalRiyadh**
 
 [⬆ Back to Top](#-28speedshop---inventory-management-system)
 
